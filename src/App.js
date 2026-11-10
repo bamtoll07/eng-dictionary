@@ -20,7 +20,6 @@ import {
   ChevronRight,
   Sun,
   Moon,
-  CheckCircle2,
   HelpCircle,
   ArrowRight
 } from 'lucide-react';
