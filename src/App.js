@@ -298,6 +298,7 @@ export default function App() {
   }, [words, selectedCategory, searchQuery, activeTab, bookmarks]);
 
   // --- 운전 모드 연속 재생 오디오 엔진 (영어 예문 3회 반복 + 한글 번역 포함) ---
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     let isCancelled = false;
 
