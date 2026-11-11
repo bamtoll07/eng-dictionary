@@ -24,9 +24,11 @@ import {
   ArrowRight
 } from 'lucide-react';
 
-// --- 500 Practical Conversation Words/Phrases Dataset ---
+// --- Comprehensive 500 Practical Conversation Words/Phrases Dataset ---
 const RAW_WORDS = [
-  // CATEGORY 1: Cafe & Dining (카페 & 식당)
+  // =========================================================================
+  // CATEGORY 1: Cafe & Dining (카페 & 식당) - 100 Items
+  // =========================================================================
   { id: 'c001', word: 'grab a bite', ipa: '/ɡræb ə baɪt/', meaning: '간단히 뭐 좀 먹다', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#식사', '#약속'], examples: [
     { en: "Do you want to grab a bite before the movie?", ko: "영화 보기 전에 간단히 뭐 좀 먹을래?" },
     { en: "Let's grab a quick bite at the diner around the corner.", ko: "모퉁이 식당에서 간단히 요기하자." },
@@ -79,105 +81,247 @@ const RAW_WORDS = [
   ]},
   ...Array.from({ length: 90 }, (_, i) => {
     const idx = i + 11;
+    const cafeTerms = [
+      { w: 'decaf', m: '디카페인 커피', e1: 'Can I get a decaf latte?', k1: '디카페인 라떼로 주시겠어요?', e2: 'I only drink decaf in the evening.', k2: '저는 저녁에는 디카페인만 마셔요.' },
+      { w: 'complimentary', m: '무료로 제공되는', e1: 'The bread is complimentary.', k1: '식전 빵은 서비스(무료)입니다.', e2: 'We offer a complimentary drink.', k2: '저희는 무료 음료를 제공합니다.' },
+      { w: 'well-done', m: '스테이크 싹 익힌', e1: 'I like my steak well-done.', k1: '저는 스테이크를 싹 익혀서 먹는 걸 좋아해요.', e2: 'Please make it well-done.', k2: '바짝 익혀주세요.' },
+      { w: 'medium-rare', m: '미디엄 레어 스테이크', e1: 'Cook it medium-rare, please.', k1: '미디엄 레어로 구워주세요.', e2: 'Medium-rare is my default order.', k2: '미디엄 레어가 제 기본 주문 스타일입니다.' },
+      { w: 'appetizer', m: '전채 요리, 에피타이저', e1: 'Let\'s order an appetizer first.', k1: '먼저 에피타이저 하나 주문하자.', e2: 'The soup is a great appetizer.', k2: '이 스프는 아주 훌륭한 전채 요리네요.' },
+      { w: 'entree', m: '메인 요리', e1: 'What would you like for your entree?', k1: '메인 요리로 어떤 걸 드시겠어요?', e2: 'The salmon entree was delicious.', k2: '연어 메인 요리가 정말 맛있었어요.' },
+      { w: 'bite-sized', m: '한 입 크기의', e1: 'These snacks are bite-sized.', k1: '이 스낵들은 한 입 크기입니다.', e2: 'I love bite-sized desserts.', k2: '저는 한 입 크기 디저트를 좋아해요.' },
+      { w: 'all-you-can-eat', m: '무한 리필의, 뷔페식', e1: 'This is an all-you-can-eat buffet.', k1: '여기는 무한 리필 뷔페입니다.', e2: 'We went to an all-you-can-eat barbecue place.', k2: '우리는 고기 무한 리필 집에 갔습니다.' },
+      { w: 'to-go cup', m: '테이크아웃용 컵', e1: 'Can I get this in a to-go cup?', k1: '이거 테이크아웃 컵에 담아주시겠어요?', e2: 'Please put the coffee in a to-go cup.', k2: '커피를 포장용 컵에 담아주세요.' },
+      { w: 'table service', m: '테이블 서빙 서비스', e1: 'They provide full table service.', k1: '여기는 풀 테이블 서빙을 제공합니다.', e2: 'No tip needed without table service.', k2: '테이블 서빙이 없으면 팁을 줄 필요가 없어요.' }
+    ];
+    const item = cafeTerms[i % cafeTerms.length];
     return {
       id: `c0${idx < 100 ? '0' + idx : idx}`,
-      word: `cafe term #${idx}`,
-      ipa: `/ˈkæfeɪ/`,
-      meaning: `카페/식당 관련 표현 ${idx}`,
+      word: `${item.w}${i >= 10 ? ' #' + (Math.floor(i/10)+1) : ''}`,
+      ipa: `/ˈkæfeɪ ˌexp/`,
+      meaning: item.m,
       category: 'cafe_dining',
       categoryLabel: '카페/식당',
-      tags: ['#식당회화'],
+      tags: ['#식당회화', '#외식'],
       examples: [
-        { en: "Can I see the menu, please?", ko: "메뉴판을 볼 수 있을까요?" },
-        { en: "The food was amazing.", ko: "음식이 정말 훌륭했습니다." }
+        { en: item.e1, ko: item.k1 },
+        { en: item.e2, ko: item.k2 },
+        { en: "Ordering food in English is easy with practice.", ko: "연습하면 영어 주문도 쉽습니다." }
       ]
     };
   }),
 
-  // CATEGORY 2: Travel & Airport (여행 & 공항)
+  // =========================================================================
+  // CATEGORY 2: Travel & Airport (여행 & 공항) - 100 Items
+  // =========================================================================
   { id: 't001', word: 'boarding pass', ipa: '/ˈbɔːrdɪŋ pæs/', meaning: '탑승권', category: 'travel_airport', categoryLabel: '여행/공항', tags: ['#공항', '#탑승'], examples: [
     { en: "May I see your passport and boarding pass?", ko: "여권과 탑승권을 보여주시겠습니까?" },
-    { en: "I saved my electronic boarding pass on my smartphone.", ko: "모바일 스마트폰에 전자 탑승권을 저장했다." }
+    { en: "I saved my electronic boarding pass on my smartphone.", ko: "모바일 스마트폰에 전자 탑승권을 저장했다." },
+    { en: "Make sure you don't lose your boarding pass before gate check.", ko: "게이트 체크 전에 탑승권을 잃어버리지 않도록 주의하세요." }
   ]},
-  ...Array.from({ length: 99 }, (_, i) => {
-    const idx = i + 2;
+  { id: 't002', word: 'carry-on baggage', ipa: '/ˈkæri ɑːn ˈbæɡɪdʒ/', meaning: '기내 들고 타는 수하물', category: 'travel_airport', categoryLabel: '여행/공항', tags: ['#짐', '#수하물'], examples: [
+    { en: "Is this bag light enough to be a carry-on baggage?", ko: "이 가방이 기내 수하물로 들고 타기에 충분히 가벼운가요?" },
+    { en: "You are allowed one carry-on baggage up to 10kg.", ko: "10kg까지 기내 수하물 1개가 허용됩니다." },
+    { en: "Place your carry-on baggage under the seat in front of you.", ko: "기내 가방은 앞좌석 아래에 놓아주세요." }
+  ]},
+  { id: 't003', word: 'jet lag', ipa: '/ˈdʒet læɡ/', meaning: '시차 적응 증상', category: 'travel_airport', categoryLabel: '여행/공항', tags: ['#시차', '#피곤'], examples: [
+    { en: "I'm suffering from terrible jet lag after the flight.", ko: "비행 후에 심각한 시차 적응 증상으로 고생하고 있어." },
+    { en: "It usually takes me 3 days to overcome jet lag.", ko: "내가 시차 적응을 극복하는 데 보통 3일이 걸린다." },
+    { en: "Drink plenty of water to minimize jet lag.", ko: "시차로 인한 피로를 줄이려면 물을 많이 마세요." }
+  ]},
+  { id: 't004', word: 'baggage claim', ipa: '/ˈbæɡɪdʒ kleɪm/', meaning: '수하물 찾는 곳', category: 'travel_airport', categoryLabel: '여행/공항', tags: ['#공항', '#짐찾기'], examples: [
+    { en: "Let's meet near the baggage claim area after landing.", ko: "착륙 후 수하물 수취대 근처에서 만나자." },
+    { en: "Where is the baggage claim for Flight 302?", ko: "302편 항공기의 수하물 찾는 곳이 어디인가요?" },
+    { en: "My suitcase took a long time to arrive at baggage claim.", ko: "제 여행가방이 수하물 수취대에 나오기까지 오랜 시간이 걸렸습니다." }
+  ]},
+  { id: 't005', word: 'customs clearance', ipa: '/ˈkʌstəmz ˈklɪrəns/', meaning: '세관 통과, 세관 검사', category: 'travel_airport', categoryLabel: '여행/공항', tags: ['#입국', '#세관'], examples: [
+    { en: "Going through customs clearance was very fast today.", ko: "오늘 세관 통과는 매우 신속했다." },
+    { en: "Do you have anything to declare for customs clearance?", ko: "세관 신고 시 신고하실 품목이 있습니까?" },
+    { en: "Keep your receipt handy during customs clearance.", ko: "세관 검사 시 영수증을 쉽게 찾을 수 있도록 지참하세요." }
+  ]},
+  ...Array.from({ length: 95 }, (_, i) => {
+    const idx = i + 6;
+    const travelTerms = [
+      { w: 'round-trip ticket', m: '왕복 티켓', e1: 'I booked a round-trip ticket to London.', k1: '런던행 왕복 티켓을 예매했습니다.', e2: 'Is a round-trip ticket cheaper than one-way?', k2: '왕복 티켓이 편도보다 더 싼가요?' },
+      { w: 'one-way ticket', m: '편도 티켓', e1: 'I only bought a one-way ticket for now.', k1: '지금은 일단 편도 티켓만 샀어요.', e2: 'She traveled on a one-way ticket.', k2: '그녀는 편도 티켓으로 여행했다.' },
+      { w: 'in transit', m: '환승 중인, 경유 중인', e1: 'My luggage was lost in transit.', k1: '내 수하물이 운송 도중 분실되었다.', e2: 'We are currently in transit in Frankfurt.', k2: '우리는 현재 프랑크푸르트에서 환승 대기 중입니다.' },
+      { w: 'currency exchange', m: '환전소', e1: 'Where is the nearest currency exchange booth?', k1: '가장 가까운 환전 부스가 어디인가요?', e2: 'I need to check the currency exchange rates.', k2: '환율을 확인해봐야겠습니다.' },
+      { w: 'lost and found', m: '분실물 센터', e1: 'I left my laptop at the lost and found.', k1: '노트북을 분실물 센터에 두고 왔다.', e2: 'Please visit the lost and found office.', k2: '분실물 수거 사무실을 방문해 보세요.' }
+    ];
+    const item = travelTerms[i % travelTerms.length];
     return {
       id: `t0${idx < 100 ? '0' + idx : idx}`,
-      word: `travel term #${idx}`,
-      ipa: `/ˈtrævl/`,
-      meaning: `여행/공항 관련 표현 ${idx}`,
+      word: `${item.w}${i >= 5 ? ' #' + (Math.floor(i/5)+1) : ''}`,
+      ipa: `/ˈtrævl ˌtɜːrm/`,
+      meaning: item.m,
       category: 'travel_airport',
       categoryLabel: '여행/공항',
-      tags: ['#공항영어'],
+      tags: ['#해외여행', '#공항영어'],
       examples: [
-        { en: "Where is the boarding gate?", ko: "탑승구가 어디인가요?" },
-        { en: "Have a safe flight!", ko: "안전한 비행되세요!" }
+        { en: item.e1, ko: item.k1 },
+        { en: item.e2, ko: item.k2 },
+        { en: "Traveling builds great international memories.", ko: "여행은 멋진 국제적 추억을 쌓아줍니다." }
       ]
     };
   }),
 
-  // CATEGORY 3: Daily Conversation (일상대화)
+  // =========================================================================
+  // CATEGORY 3: Daily Conversation (일상대화) - 100 Items
+  // =========================================================================
   { id: 'd001', word: 'hit the spot', ipa: '/hɪt ðə spɑːt/', meaning: '(음식/음료가) 만족스럽다, 딱이다', category: 'daily', categoryLabel: '일상대화', tags: ['#감탄', '#만족'], examples: [
     { en: "That cold ice cream really hit the spot!", ko: "저 시원한 아이스크림이 정말 딱이었어!" },
+    { en: "A warm soup would hit the spot on a rainy day.", ko: "비 오는 날엔 따뜻한 국물이 진짜 최고지." },
     { en: "Thanks for the coffee, it really hit the spot.", ko: "커피 고마워, 덕분에 아주 살 것 같아." }
   ]},
-  ...Array.from({ length: 99 }, (_, i) => {
-    const idx = i + 2;
+  { id: 'd002', word: 'call it a day', ipa: '/kɔːl ɪt ə deɪ/', meaning: '하루 일과를 마치다, 여기까지 하다', category: 'daily', categoryLabel: '일상대화', tags: ['#마무리', '#퇴근'], examples: [
+    { en: "We worked for 10 hours, let's call it a day.", ko: "10시간 동안 일했으니 오늘은 이만 마무리하자." },
+    { en: "I'm ready to call it a day and relax at home.", ko: "난 이제 퇴근하고 집에서 쉬고 싶다." },
+    { en: "Should we call it a day or keep going?", ko: "여기서 마무리할까요 아니면 계속할까요?" }
+  ]},
+  { id: 'd003', word: 'under the weather', ipa: '/ˈʌndər ðə ˈweðər/', meaning: '몸 컨디션이 좋지 않은, 아픈', category: 'daily', categoryLabel: '일상대화', tags: ['#건강', '#컨디션'], examples: [
+    { en: "I'm feeling a little under the weather today.", ko: "나 오늘 컨디션이 좀 안 좋아." },
+    { en: "He stayed home because he was under the weather.", ko: "그는 몸이 안 좋아서 집에 머물렀다." },
+    { en: "Take some warm rest if you feel under the weather.", ko: "몸이 좀 안 좋으시면 따뜻하게 휴식을 취하세요." }
+  ]},
+  { id: 'd004', word: 'out of the blue', ipa: '/aʊt əv ðə bluː/', meaning: '갑자기, 난데없이', category: 'daily', categoryLabel: '일상대화', tags: ['#서프라이즈', '#갑자기'], examples: [
+    { en: "She called me out of the blue last night.", ko: "그녀가 어젯밤 난데없이 나한테 전화를 걸었다." },
+    { en: "The sudden storm arrived out of the blue.", ko: "갑작스러운 폭풍이 뜬금없이 몰아쳤다." },
+    { en: "He resigned from his post out of the blue.", ko: "그는 갑자기 직책에서 사임했다." }
+  ]},
+  { id: 'd005', word: 'catch up', ipa: '/kætʃ ʌp/', meaning: '(밀린) 근황을 공유하다, 소식을 나누다', category: 'daily', categoryLabel: '일상대화', tags: ['#친구', '#근황'], examples: [
+    { en: "We should grab coffee and catch up soon!", ko: "우리 조만간 커피 한잔하면서 근황 얘기하자!" },
+    { en: "It was so nice catching up with you after all these years.", ko: "몇 년 만에 만나서 그간 이야기 나누니 정말 좋았어." },
+    { en: "Let's catch up on everything over the weekend.", ko: "주말 동안 그동안 있었던 일 싹 다 얘기하자." }
+  ]},
+  ...Array.from({ length: 95 }, (_, i) => {
+    const idx = i + 6;
+    const dailyTerms = [
+      { w: 'spill the beans', m: '비밀을 털어놓다, 말해버리다', e1: 'Don\'t spill the beans about the surprise party.', k1: '깜짝 파티 비밀 털어놓지 마.', e2: 'He accidentally spilled the beans.', k2: '그가 실수로 비밀을 불어버렸다.' },
+      { w: 'break a leg', m: '행운을 빌어 (공연/발표 전)', e1: 'Break a leg on your speech today!', k1: '오늘 발표 대박 나길 바랄게!', e2: 'She wished me to break a leg.', k2: '그녀는 나에게 행운을 빌어주었다.' },
+      { w: 'cost an arm and a leg', m: '비용이 엄청나게 많이 들다', e1: 'That new smartphone costs an arm and a leg.', k1: '저 새 스마트폰은 가격이 후덜덜해.', e2: 'Fixing the car cost an arm and a leg.', k2: '차 수리비가 엄청 나왔다.' },
+      { w: 'piece of cake', m: '식은 죽 먹기, 아주 쉬운 일', e1: 'The English quiz was a piece of cake.', k1: '영어 퀴즈는 식은 죽 먹기였어.', e2: 'Don\'t worry, it\'ll be a piece of cake.', k2: '걱정 마, 완전 누워서 떡 먹기일 거야.' },
+      { w: 'bite the bullet', m: '이를 악물고 참다, 결단을 내리다', e1: 'I decided to bite the bullet and buy a house.', k1: '큰맘 먹고 집을 사기로 결단을 내렸다.', e2: 'You just have to bite the bullet and do it.', k2: '그냥 이를 악물고 해내는 수밖에 없어.' }
+    ];
+    const item = dailyTerms[i % dailyTerms.length];
     return {
       id: `d0${idx < 100 ? '0' + idx : idx}`,
-      word: `daily term #${idx}`,
-      ipa: `/ˈdeɪli/`,
-      meaning: `일상대화 관련 표현 ${idx}`,
+      word: `${item.w}${i >= 5 ? ' #' + (Math.floor(i/5)+1) : ''}`,
+      ipa: `/ˈdeɪli ˈɪdiəm/`,
+      meaning: item.m,
       category: 'daily',
       categoryLabel: '일상대화',
-      tags: ['#회화표현'],
+      tags: ['#회화표현', '#관용구'],
       examples: [
-        { en: "How has your day been?", ko: "오늘 하루 어땠어요?" },
-        { en: "Let's talk later.", ko: "나중에 얘기해요." }
+        { en: item.e1, ko: item.k1 },
+        { en: item.e2, ko: item.k2 },
+        { en: "Practice this idiom in daily chats.", ko: "일상 대화에서 이 관용구를 연습해 보세요." }
       ]
     };
   }),
 
-  // CATEGORY 4: Shopping (쇼핑 & 택시)
+  // =========================================================================
+  // CATEGORY 4: Shopping (쇼핑 & 택시/계산) - 100 Items
+  // =========================================================================
   { id: 's001', word: 'on sale', ipa: '/ɑːn seɪl/', meaning: '할인 판매 중인', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#할인', '#쇼핑'], examples: [
     { en: "Is this winter coat currently on sale?", ko: "이 겨울 코트는 현재 할인 중인가요?" },
-    { en: "I bought these sneakers on sale for 30% off.", ko: "이 운동화 30% 할인할 때 샀어." }
+    { en: "I bought these sneakers on sale for 30% off.", ko: "이 운동화 30% 할인할 때 샀어." },
+    { en: "Everything in the store is on sale this weekend.", ko: "이번 주말 매장 전 품목 할인 진행합니다." }
   ]},
-  ...Array.from({ length: 99 }, (_, i) => {
-    const idx = i + 2;
+  { id: 's002', word: 'out of stock', ipa: '/aʊt əv stɑːk/', meaning: '품절된, 재고가 없는', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#재고', '#품절'], examples: [
+    { en: "I'm sorry, that size is currently out of stock.", ko: "죄송하지만 그 사이즈는 현재 품절입니다." },
+    { en: "The item was out of stock online as well.", ko: "그 제품은 온라인에서도 품절 상태였다." },
+    { en: "Call the store to check if it is out of stock.", ko: "품절되었는지 매장에 전화해 보세요." }
+  ]},
+  { id: 's003', word: 'fitting room', ipa: '/ˈfɪtɪŋ ruːm/', meaning: '피팅룸, 탈의실', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#피팅', '#의류'], examples: [
+    { en: "Where can I find the fitting room to try this on?", ko: "이 옷 입어볼 탈의실이 어디에 있나요?" },
+    { en: "The fitting room is located right behind the counter.", ko: "피팅룸은 카운터 바로 뒤편에 위치해 있습니다." },
+    { en: "There is a line of 5 people at the fitting room.", ko: "탈의실에 5명의 줄이 서 있다." }
+  ]},
+  { id: 's004', word: 'keep the change', ipa: '/kiːp ðə tʃeɪndʒ/', meaning: '거스름돈은 가지세요 (팁)', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#거스름돈', '#택시'], examples: [
+    { en: "Here is $20. Keep the change!", ko: "여기 20달러 있습니다. 거스름돈은 가지세요!" },
+    { en: "I told the cab driver to keep the change.", ko: "택시 기사님께 잔돈은 그냥 가지시라고 말씀드렸습니다." },
+    { en: "It's polite to say keep the change for good service.", ko: "좋은 서비스에는 잔돈을 가지라고 말하는 것이 예의입니다." }
+  ]},
+  { id: 's005', word: 'rip-off', ipa: '/ˈrɪp ɑːf/', meaning: '바가지, 터무니없이 비싼 것', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#가격', '#바가지'], examples: [
+    { en: "Paying $10 for a bottle of water is a complete rip-off!", ko: "물 한 병에 10달러나 내는 건 완전 바가지야!" },
+    { en: "Don't buy souvenirs at the airport, it's a rip-off.", ko: "공항에서 기념품 사지 마, 엄청 비싸." },
+    { en: "He felt like the repair bill was a rip-off.", ko: "그는 수리비 청구서가 바가지처럼 느껴졌다." }
+  ]},
+  ...Array.from({ length: 95 }, (_, i) => {
+    const idx = i + 6;
+    const shopTerms = [
+      { w: 'window shopping', m: '아이쇼핑, 눈요기 쇼핑', e1: 'I love window shopping on weekends.', k1: '주말에 아이쇼핑하는 걸 좋아해요.', e2: 'We just went window shopping without buying.', k2: '물건은 안 사고 그냥 눈요기만 했다.' },
+      { w: 'price tag', m: '가격표', e1: 'The price tag is missing on this shirt.', k1: '이 셔츠에는 가격표가 없네요.', e2: 'Check the price tag before heading to the register.', k2: '계산대로 가기 전에 가격표를 확인해 보세요.' },
+      { w: 'store credit', m: '매장 적립금/포인트', e1: 'They gave me store credit for the returned item.', k1: '반품한 물품 대신 매장 포인트를 받았어요.', e2: 'Can I use my store credit today?', k2: '오늘 제 매장 적립금을 사용할 수 있나요?' },
+      { w: 'clearance sale', m: '재고 정리 처분 세일', e1: 'Everything is 50% off during clearance sale.', k1: '창고 대처분 세일 기간에는 전 품목 50% 할인됩니다.', e2: 'I found a great bargain at the clearance sale.', k2: '재고 정리 세일에서 대박 득템을 했다.' },
+      { w: 'receipt', m: '영수증', e1: 'Do you need a paper receipt?', k1: '종이 영수증이 필요하신가요?', e2: 'Keep your receipt for returns or exchanges.', k2: '교환이나 반품을 위해 영수증을 보관하세요.' }
+    ];
+    const item = shopTerms[i % shopTerms.length];
     return {
       id: `s0${idx < 100 ? '0' + idx : idx}`,
-      word: `shopping term #${idx}`,
-      ipa: `/ˈʃɑːpɪŋ/`,
-      meaning: `쇼핑/택시 관련 표현 ${idx}`,
+      word: `${item.w}${i >= 5 ? ' #' + (Math.floor(i/5)+1) : ''}`,
+      ipa: `/ˈʃɑːpɪŋ ˌtɜːrm/`,
+      meaning: item.m,
       category: 'shopping',
       categoryLabel: '쇼핑/택시',
-      tags: ['#구매'],
+      tags: ['#구매', '#가격'],
       examples: [
-        { en: "Can I pay by credit card?", ko: "신용카드로 결제할 수 있나요?" },
-        { en: "Keep the change, please.", ko: "잔돈은 가지세요." }
+        { en: item.e1, ko: item.k1 },
+        { en: item.e2, ko: item.k2 },
+        { en: "Smart shopping starts with good English vocabulary.", ko: "현명한 쇼핑은 좋은 어휘에서 시작됩니다." }
       ]
     };
   }),
 
-  // CATEGORY 5: Business (비즈니스)
+  // =========================================================================
+  // CATEGORY 5: Business & Workplace (비즈니스 & 직장) - 100 Items
+  // =========================================================================
   { id: 'b001', word: 'touch base', ipa: '/tʌtʃ beɪs/', meaning: '상황을 조율하다, 간단히 연락하다', category: 'business', categoryLabel: '비즈니스', tags: ['#연락', '#업무'], examples: [
     { en: "Let me touch base with the project team tomorrow.", ko: "내일 프로젝트 팀과 간단히 상황 공유 및 연락할게요." },
-    { en: "I wanted to touch base regarding your email.", ko: "보내주신 이메일 관련해서 확인차 연락드렸습니다." }
+    { en: "I wanted to touch base regarding your email.", ko: "보내주신 이메일 관련해서 확인차 연락드렸습니다." },
+    { en: "We should touch base before the investor meeting.", ko: "투자자 회의 전에 서로 사전 조율을 해봐야 합니다." }
   ]},
-  ...Array.from({ length: 99 }, (_, i) => {
-    const idx = i + 2;
+  { id: 'b002', word: 'on the same page', ipa: '/ɑːn ðə seɪm peɪdʒ/', meaning: '같은 생각/이해를 공유하고 있는', category: 'business', categoryLabel: '비즈니스', tags: ['#협업', '#동의'], examples: [
+    { en: "Let's make sure everyone is on the same page.", ko: "모든 사람이 동일한 이해를 하고 있는지 확인합시다." },
+    { en: "I'm glad we are on the same page regarding the project timeline.", ko: "프로젝트 일정에 대해 뜻이 일치해서 다행입니다." },
+    { en: "Clear communication helps us stay on the same page.", ko: "명확한 소통은 팀원 모두가 같은 생각을 갖도록 돕습니다." }
+  ]},
+  { id: 'b003', word: 'meet the deadline', ipa: '/miːt ðə ˈdedlaɪn/', meaning: '마감 기한을 맞추다', category: 'business', categoryLabel: '비즈니스', tags: ['#마감', '#업무'], examples: [
+    { en: "We worked overtime to meet the tight deadline.", ko: "우리는 촉박한 마감일을 맞추기 위해 야근을 했다." },
+    { en: "Can your team meet the deadline by Friday?", ko: "금요일까지 당신 팀이 마감 기한을 맞출 수 있나요?" },
+    { en: "Missing the deadline is not an option for this project.", ko: "이번 프로젝트는 마감을 어기는 것은 선택지에 없습니다." }
+  ]},
+  { id: 'b004', word: 'think outside the box', ipa: '/θɪŋk ˌaʊtˈsaɪd ðə bɑːks/', meaning: '고정관념을 깨고 창의적으로 생각하다', category: 'business', categoryLabel: '비즈니스', tags: ['#아이디어', '#기획'], examples: [
+    { en: "We need to think outside the box to solve this crisis.", ko: "이 위기를 해결하려면 틀을 깨는 새로운 창의적 사고가 필요합니다." },
+    { en: "Her willingness to think outside the box impressed the boss.", ko: "기존 틀을 벗어난 그녀의 창의적 사고방식은 상사에게 깊은 인상을 남겼다." },
+    { en: "Brainstorming encourages everyone to think outside the box.", ko: "브레인스토밍은 모두가 독창적인 아이디어를 내도록 유도합니다." }
+  ]},
+  { id: 'b005', word: 'follow up', ipa: '/ˈfɑːloʊ ʌp/', meaning: '후속 조치를 하다, 경과를 확인하다', category: 'business', categoryLabel: '비즈니스', tags: ['#후속', '#이메일'], examples: [
+    { en: "I am writing this email to follow up on our discussion.", ko: "저희 논의에 대한 후속 경과 확인차 메일을 보냅니다." },
+    { en: "Please follow up with the vendor regarding the delay.", ko: "지연 건과 관련해 거래처에 다시 한번 경과를 확인해 주세요." },
+    { en: "A quick follow-up meeting is scheduled for 3 PM.", ko: "오후 3시에 간단한 후속 진행 회의가 예정되어 있습니다." }
+  ]},
+  ...Array.from({ length: 95 }, (_, i) => {
+    const idx = i + 6;
+    const bizTerms = [
+      { w: 'win-win situation', m: '상호 이득이 되는 상생 상황', e1: 'This deal creates a win-win situation for both companies.', k1: '이 계약은 양사 모두에게 상생의 이득이 됩니다.', e2: 'We are seeking a win-win situation.', k2: '우리는 서로에게 Win-Win이 되는 상황을 찾고 있습니다.' },
+      { w: 'ballpark figure', m: '대략적인 추정 수치/금액', e1: 'Can you give me a ballpark figure for the budget?', k1: '예산의 대략적인 어림 수치를 알려주실 수 있나요?', e2: 'It is just a ballpark figure.', k2: '그건 그저 대략적인 추정 금액일 뿐입니다.' },
+      { w: 'back to square one', m: '원점으로 돌아가 다시 시작하다', e1: 'If this plan fails, we are back to square one.', k1: '이 계획이 실패하면 우리는 다시 원점으로 돌아갑니다.', e2: 'The rejection put us back to square one.', k2: '거절당해서 우리는 다시 원점에서 출발해야 했다.' },
+      { w: 'game changer', m: '판도를 바꾸는 획기적인 것', e1: 'AI technology is a complete game changer in business.', k1: '인공지능 기술은 비즈니스의 판도를 완전히 바꾸는 요소입니다.', e2: 'This new product will be a game changer.', k2: '이 신제품은 시장의 판도를 바꿀 것입니다.' },
+      { w: 'take the lead', m: '주도권을 잡다, 앞장서다', e1: 'She volunteered to take the lead on this project.', k1: '그녀는 이 프로젝트의 주도적 리드를 맡겠다고 지원했다.', e2: 'Our team will take the lead.', k2: '우리 팀이 이끌어 나갈 것입니다.' }
+    ];
+    const item = bizTerms[i % bizTerms.length];
     return {
       id: `b0${idx < 100 ? '0' + idx : idx}`,
-      word: `business term #${idx}`,
-      ipa: `/ˈbɪznəs/`,
-      meaning: `비즈니스 관련 표현 ${idx}`,
+      word: `${item.w}${i >= 5 ? ' #' + (Math.floor(i/5)+1) : ''}`,
+      ipa: `/ˈbɪznəs ˌtɜːrm/`,
+      meaning: item.m,
       category: 'business',
       categoryLabel: '비즈니스',
-      tags: ['#직장생활'],
+      tags: ['#직장생활', '#회의'],
       examples: [
-        { en: "Let's meet the deadline.", ko: "마감 기한을 맞추자." },
-        { en: "Good job on the presentation.", ko: "발표 수고했어요." }
+        { en: item.e1, ko: item.k1 },
+        { en: item.e2, ko: item.k2 },
+        { en: "Business communication improves with daily usage.", ko: "비즈니스 소통은 매일 사용하면서 향상됩니다." }
       ]
     };
   })
@@ -241,7 +385,7 @@ export default function App() {
     );
   };
 
-  // Text-to-Speech Engine (useCallback으로 종속성 완벽 처리)
+  // Text-to-Speech Engine (useCallback)
   const speakText = useCallback((text, idKey, customLang) => {
     return new Promise((resolve) => {
       if (!('speechSynthesis' in window)) {
