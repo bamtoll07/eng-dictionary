@@ -24,260 +24,137 @@ import {
   ArrowRight
 } from 'lucide-react';
 
-// --- 500 Real-World Unique Practical Expressions Dataset ---
+// --- 100% 고유한 핵심 영단어/숙어 영한사전 데이터셋 ---
 const RAW_WORDS = [
   // --- CAFE & DINING (카페/식당) ---
-  { id: 'c001', word: 'grab a bite', ipa: '/ɡræb ə baɪt/', meaning: '간단히 뭐 좀 먹다', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#식사', '#약속'], examples: [
-    { en: "Do you want to grab a bite before the movie?", ko: "영화 보기 전에 간단히 뭐 좀 먹을래?" },
-    { en: "Let's grab a quick bite at the diner around the corner.", ko: "모퉁이 식당에서 간단히 요기하자." },
-    { en: "I usually grab a bite on my way home from work.", ko: "나는 보통 퇴근하는 길에 간단히 끼니를 때운다." }
+  { id: 'c001', word: 'appetizer', ipa: '/ˈæpɪtaɪzər/', meaning: '애피타이저, 전식', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#식사', '#메뉴'], examples: [
+    { en: "Would you like to order an appetizer before the main course?", ko: "메인 요리 전에 애피타이저를 주문하시겠어요?" },
+    { en: "We shared a delicious garlic bread as an appetizer.", ko: "우리는 애피타이저로 맛있는 마늘빵을 나눠 먹었다." }
   ]},
-  { id: 'c002', word: 'make a reservation', ipa: '/meɪk ə ˌrezərˈveɪʃn/', meaning: '예약하다', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#예약', '#식당'], examples: [
-    { en: "I'd like to make a reservation for two at 7 PM.", ko: "오후 7시에 2명 예약하고 싶습니다." },
-    { en: "Did you make a reservation under your name?", ko: "본인 이름으로 예약하셨나요?" },
-    { en: "It's always safer to make a reservation on weekends.", ko: "주말에는 항상 예약해 두는 편이 안전합니다." }
+  { id: 'c002', word: 'beverage', ipa: '/ˈbevərɪdʒ/', meaning: '음료', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#음료', '#카페'], examples: [
+    { en: "Hot and cold beverages are served in the lounge.", ko: "라운지에서는 뜨겁고 찬 음료가 제공됩니다." },
+    { en: "Please select one complimentary beverage with your meal.", ko: "식사와 함께 무료 음료를 하나 선택해 주세요." }
   ]},
-  { id: 'c003', word: 'on the side', ipa: '/ɑːn ðə saɪd/', meaning: '(드레싱/소스 등을) 따로, 사이드로', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#주문', '#옵션'], examples: [
-    { en: "Can I get the salad dressing on the side?", ko: "샐러드 드레싱은 따로 주실 수 있나요?" },
-    { en: "I would like french fries on the side, please.", ko: "감자튀김을 사이드로 따로 주세요." },
-    { en: "She ordered extra hot sauce on the side.", ko: "그녀는 매운 소스를 따로 더 달라고 주문했습니다." }
+  { id: 'c003', word: 'cutlery', ipa: '/ˈkʌtləri/', meaning: '(나이프·포크·숟가락 등의) 식기류', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#식기', '#테이블'], examples: [
+    { en: "Could you bring clean cutlery for our table, please?", ko: "저희 테이블에 깨끗한 식기류 좀 가져다주시겠어요?" },
+    { en: "The waiter laid out the cutlery neatly on the cloth.", ko: "웨이터가 식탁보 위에 식기류를 깔끔하게 놓았다." }
   ]},
-  { id: 'c004', word: 'split the bill', ipa: '/splɪt ðə bɪl/', meaning: '더치페이하다, 각자 나눠 내다', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#계산', '#더치페이'], examples: [
-    { en: "Why don't we split the bill evenly?", ko: "우리 똑같이 나눠서 내는 게 어때?" },
-    { en: "Can we split the bill into separate payments?", ko: "영수증을 나눠서 각각 결제해 주실 수 있나요?" },
-    { en: "We decided to split the bill after dinner.", ko: "우리는 저녁 식사 후 각자 계산하기로 했다." }
+  { id: 'c004', word: 'gratuity', ipa: '/ɡrəˈtuːəti/', meaning: '팁, 봉사료', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#팁', '#계산'], examples: [
+    { en: "A standard gratuity of 15% is included in the bill.", ko: "계산서에 15%의 표준 봉사료가 포함되어 있습니다." },
+    { en: "Leaving a gratuity is customary for exceptional service.", ko: "훌륭한 서비스에 대해 팁을 남기는 것은 관례이다." }
   ]},
-  { id: 'c005', word: 'house special', ipa: '/haʊs ˈspeʃl/', meaning: '주방장 추천 요리, 대표 메뉴', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#메뉴', '#추천'], examples: [
-    { en: "What is today's house special?", ko: "오늘의 주방장 추천 요리는 무엇인가요?" },
-    { en: "I highly recommend trying the house special pasta.", ko: "이 집 대표 메뉴인 파스타를 꼭 드셔보시길 추천합니다." },
-    { en: "The chef served his famous house special dessert.", ko: "셰프는 유명한 대표 디저트를 대접했다." }
+  { id: 'c005', word: 'ingredient', ipa: '/ɪnˈɡriːdiənt/', meaning: '재료, 성분', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#음식재료', '#요리'], examples: [
+    { en: "This soup is made with fresh organic ingredients.", ko: "이 수프는 신선한 유기농 재료로 만들어졌습니다." },
+    { en: "Always check the ingredient list if you have food allergies.", ko: "음식 알레르기가 있다면 항상 재료 목록을 확인하세요." }
   ]},
-  { id: 'c006', word: 'decaf iced americano', ipa: '/ˌdiːkæf aɪst əˈmerɪkɑːnoʊ/', meaning: '디카페인 아이스 아메리카노', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#카페', '#커피주문'], examples: [
-    { en: "Can I get a decaf iced americano with oat milk?", ko: "디카페인 아이스 아메리카노 오트 밀크로 변경해서 주시겠어요?" },
-    { en: "I usually switch to a decaf iced americano in the evening.", ko: "나는 저녁에는 보통 디카페인 아이스 아메리카노를 마신다." },
-    { en: "Is the decaf iced americano available in a large size?", ko: "디카페인 아이스 아메리카노는 벤티(큰) 사이즈로도 되나요?" }
+  { id: 'c006', word: 'menu', ipa: '/ˈmenjuː/', meaning: '메뉴판, 차림표', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#메뉴판', '#주문'], examples: [
+    { en: "May I see the dessert menu, please?", ko: "디저트 메뉴판을 볼 수 있을까요?" },
+    { en: "The restaurant updates its seasonal menu every three months.", ko: "그 식당은 3개월마다 계절 메뉴를 새로 바꾼다." }
   ]},
-  { id: 'c007', word: 'allergy warning', ipa: '/ˈælərdʒi ˈwɔːrnɪŋ/', meaning: '알레르기 주의 사항', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#알레르기', '#식단'], examples: [
-    { en: "Please check if this dish contains any nuts due to my allergy warning.", ko: "알레르기가 있으니 이 음식에 견과류가 들어가는지 확인해 주세요." },
-    { en: "The menu clearly displays an allergy warning for seafood.", ko: "메뉴판에 해산물 알레르기 주의 문구가 선명하게 적혀 있다." },
-    { en: "Always mention your allergy warning before ordering food abroad.", ko: "해외에서 음식을 주문하기 전에는 항상 알레르기 주의사항을 말씀하세요." }
+  { id: 'c007', word: 'receipt', ipa: '/rɪˈsiːt/', meaning: '영수증', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#영수증', '#결제'], examples: [
+    { en: "Would you like your receipt or should I throw it away?", ko: "영수증을 드릴까요, 아니면 버려드릴까요?" },
+    { en: "Keep your receipt in case you need to exchange the item.", ko: "상품을 교환해야 할 경우를 대비해 영수증을 보관하세요." }
   ]},
-  { id: 'c008', word: 'refill', ipa: '/ˈriːfɪl/', meaning: '리필, 추가 리필하다', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#음료', '#서비스'], examples: [
-    { en: "Do you offer free refills on fountain drinks?", ko: "탄산음료는 무료 리필이 가능한가요?" },
-    { en: "May I get a refill on my black coffee, please?", ko: "블랙 커피 리필 좀 더 받을 수 있을까요?" },
-    { en: "Some coffee shops charge an extra fee for a refill.", ko: "어떤 카페들은 리필 비용을 추가로 받기도 한다." }
+  { id: 'c008', word: 'specialty', ipa: '/ˈspeʃəlti/', meaning: '명물, 특산품, 전문 요리', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#추천요리', '#특산품'], examples: [
+    { en: "Seafood pasta is the chef's specialty here.", ko: "해산물 파스타가 이곳 셰프의 특선 요리입니다." },
+    { en: "What is the local specialty of this region?", ko: "이 지역의 향토 특산품은 무엇인가요?" }
   ]},
-  { id: 'c009', word: 'takeout or dine-in', ipa: '/ˈteɪkaʊt ɔːr ˈdaɪn ɪn/', meaning: '포장 또는 매장 식사', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#주문', '#포장'], examples: [
-    { en: "Is your order for takeout or dine-in today?", ko: "오늘 주문은 포장이신가요, 매장 식사이신가요?" },
-    { en: "We decided on takeout because the restaurant was too crowded.", ko: "식당에 사람이 너무 많아서 포장해서 먹기로 했다." },
-    { en: "Please let the cashier know if it's takeout or dine-in.", ko: "포장인지 매장 식사인지 캐셔에게 먼저 말씀해 주세요." }
+  { id: 'c009', word: 'reservation', ipa: '/ˌrezərˈveɪʃn/', meaning: '예약', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#예약', '#식당'], examples: [
+    { en: "I have a table reservation under the name of Kim.", ko: "김 이름으로 테이블 예약이 되어 있습니다." },
+    { en: "Making a reservation in advance is highly recommended.", ko: "사전에 미리 예약하는 것을 강력히 추천합니다." }
   ]},
-  { id: 'c010', word: 'tap water', ipa: '/tæp ˈwɔːtər/', meaning: '수돗물, 정수물', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#물', '#식당서비스'], examples: [
-    { en: "Could we get a jug of tap water for the table?", ko: "테이블에 마실 물병 하나 주실 수 있나요?" },
-    { en: "In many Western restaurants, tap water is served for free.", ko: "많은 서양 식당에서는 수돗물(정수물)을 무료로 제공한다." },
-    { en: "Do you prefer bottled water or tap water?", ko: "병에 든 생수를 좋아하시나요, 아니면 일반 정수물을 좋아하시나요?" }
+  { id: 'c010', word: 'vegetarian', ipa: '/ˌvedʒəˈteriən/', meaning: '채식주의자의, 채식주의자', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#채식', '#식단'], examples: [
+    { en: "Do you have any vegetarian options on the menu?", ko: "메뉴에 채식주의자용 요리가 따로 있나요?" },
+    { en: "She has been a strict vegetarian for over five years.", ko: "그녀는 5년 넘게 엄격한 채식주의자로 지내고 있다." }
   ]},
-  // (나머지 카페/식당 항목들을 풍성하게 채우는 유니크 데이터 확장...)
-  ...Array.from({ length: 90 }, (_, i) => {
-    const idx = i + 11;
-    const practicalWords = [
-      { w: 'set menu', ipa: '/set ˈmenjuː/', m: '세트 메뉴', ex: "Does the set menu include dessert and coffee?", exKo: "세트 메뉴에 디저트와 커피가 포함되어 있나요?" },
-      { w: 'barista recommendation', ipa: '/bəˈriːstə ˌrekəmenˈdeɪʃn/', m: '바바리스타 추천 음료', ex: "What is the barista recommendation for today?", exKo: "오늘 바리스타 추천 음료는 무엇인가요?" },
-      { w: 'table service', ipa: '/ˈteɪbl ˈsɜːrvɪs/', m: '직원이 직접 서빙하는 서비스', ex: "This cafe operates on self-service rather than table service.", exKo: "이 카페는 자리로 가져다주는 서비스 대신 셀프로 운영됩니다." },
-      { w: 'outdoor patio seating', ipa: '/ˈaʊtdɔːr ˈpætiou ˈsiːtɪŋ/', m: '야외 테라스 좌석', ex: "Can we sit at the outdoor patio seating outside?", exKo: "바깥 야외 테라스 좌석에 앉아도 될까요?" }
-    ];
-    const item = practicalWords[i % practicalWords.length];
-    return {
-      id: `c${idx < 100 ? '0' + idx : idx}`,
-      word: `${item.w} #${idx}`,
-      ipa: item.ipa,
-      meaning: `${item.m} 활용 표현 #${idx}`,
-      category: 'cafe_dining',
-      categoryLabel: '카페/식당',
-      tags: ['#외식회화', '#카페주문'],
-      examples: [
-        { en: item.ex, ko: item.exKo },
-        { en: `Could you explain more about option details for item ${idx}?`, ko: `${idx}번 항목의 옵션 세부 사항에 대해 설명해 주실 수 있나요?` },
-        { en: "The atmosphere here makes dining much more enjoyable.", ko: "이곳의 분위기 덕분에 식사가 훨씬 더 즐거워진다." }
-      ]
-    };
-  }),
 
   // --- TRAVEL & AIRPORT (여행/공항) ---
   { id: 't001', word: 'boarding pass', ipa: '/ˈbɔːrdɪŋ pæs/', meaning: '탑승권', category: 'travel_airport', categoryLabel: '여행/공항', tags: ['#공항', '#탑승'], examples: [
-    { en: "May I see your passport and boarding pass?", ko: "여권과 탑승권을 보여주시겠습니까?" },
-    { en: "I saved my electronic boarding pass on my smartphone.", ko: "스마트폰에 전자 탑승권을 저장해 두었다." },
-    { en: "Make sure you keep your boarding pass ready at the gate.", ko: "탑승구에서 탑승권을 바로 꺼낼 수 있게 준비해 주세요." }
+    { en: "Please have your passport and boarding pass ready.", ko: "여권과 탑승권을 준비해 주시기 바랍니다." },
+    { en: "You can print your boarding pass at the kiosk.", ko: "무인 키오스크에서 탑승권을 인쇄할 수 있습니다." }
   ]},
-  { id: 't002', word: 'carry-on baggage', ipa: '/ˈkæri ɑːn ˈbæɡɪdʒ/', meaning: '기내 수하물', category: 'travel_airport', categoryLabel: '여행/공항', tags: ['#수하물', '#비행기'], examples: [
-    { en: "Is this suitcase small enough for carry-on baggage?", ko: "이 여행가방이 기내 수하물로 들고 타기에 충분히 작은가요?" },
-    { en: "You are allowed one carry-on baggage per passenger.", ko: "승객당 기내 수하물 1개가 허용됩니다." },
-    { en: "Please place your carry-on baggage in the overhead bin.", ko: "기내 짐은 좌석 위 선반에 넣어주세요." }
+  { id: 't002', word: 'customs', ipa: '/ˈkʌstəmz/', meaning: '세관', category: 'travel_airport', categoryLabel: '여행/공항', tags: ['#세관', '#입국'], examples: [
+    { en: "Declare any taxable items before passing through customs.", ko: "세관을 통과하기 전에 과세 대상 물품을 신고하세요." },
+    { en: "We had to wait in a long line at customs.", ko: "우리는 세관에서 긴 줄을 서서 기다려야 했다." }
   ]},
-  { id: 't003', word: 'jet lag', ipa: '/ˈdʒet læɡ/', meaning: '시차 적응 피로', category: 'travel_airport', categoryLabel: '여행/공항', tags: ['#시차', '#여행피로'], examples: [
-    { en: "I'm trying to overcome severe jet lag after the long flight.", ko: "장거리 비행 후 심한 시차 피로를 극복하려 애쓰는 중이다." },
-    { en: "It usually takes a couple of days to recover from jet lag.", ko: "시차 적응을 회복하는 데 보통 며칠이 걸린다." },
-    { en: "Getting some sunlight helps reduce jet lag symptoms.", ko: "햇빛을 쬐는 것이 시차 피로를 줄이는 데 도움이 된다." }
+  { id: 't003', word: 'departure', ipa: '/dɪˈpɑːrtʃər/', meaning: '출발', category: 'travel_airport', categoryLabel: '여행/공항', tags: ['#출발', '#비행기'], examples: [
+    { en: "Check the flight status board for departure time changes.", ko: "출발 시간 변경 여부를 운항 현황판에서 확인하세요." },
+    { en: "Our departure was delayed due to heavy fog.", ko: "짙은 안개 때문에 우리 출발이 지연되었다." }
   ]},
-  { id: 't004', word: 'baggage claim', ipa: '/ˈbæɡɪdʒ kleɪm/', meaning: '수하물 찾는 곳', category: 'travel_airport', categoryLabel: '여행/공항', tags: ['#공항', '#짐찾기'], examples: [
-    { en: "Let's head to the baggage claim to pick up our bags.", ko: "짐을 찾으러 수하물 수취대로 이동하자." },
-    { en: "Which carousel is baggage claim for Flight KE081?", ko: "KE081편 수하물 찾는 곳은 몇 번 컨베이어 벨트인가요?" },
-    { en: "Our bags came out first at the baggage claim area.", ko: "우리 가방이 수하물 찾는 곳에서 가장 먼저 나왔다." }
+  { id: 't004', word: 'destination', ipa: '/ˌdestɪˈneɪʃn/', meaning: '목적지', category: 'travel_airport', categoryLabel: '여행/공항', tags: ['#목적지', '#여행'], examples: [
+    { en: "What is your final destination for this trip?", ko: "이번 여행의 최종 목적지가 어디인가요?" },
+    { en: "We finally reached our destination after a 10-hour flight.", ko: "10시간 비행 끝에 드디어 목적지에 도착했다." }
   ]},
-  { id: 't005', word: 'customs declaration', ipa: '/ˈkʌstəmz ˌdekləˈreɪʃn/', meaning: '세관 신고서', category: 'travel_airport', categoryLabel: '여행/공항', tags: ['#세관', '#입국심사'], examples: [
-    { en: "Do you have a completed customs declaration form?", ko: "작성 완료된 세관 신고서를 가지고 계십니까?" },
-    { en: "We need to fill out one customs declaration per family.", ko: "가족당 세관 신고서 1장을 작성해야 합니다." },
-    { en: "Hand your passport and customs declaration to the officer.", ko: "담당관에게 여권과 세관 신고서를 제출하세요." }
+  { id: 't005', word: 'itinerary', ipa: '/aɪˈtɪnəreri/', meaning: '여행 일정표', category: 'travel_airport', categoryLabel: '여행/공항', tags: ['#일정표', '#여행계획'], examples: [
+    { en: "I printed out a detailed itinerary for our vacation.", ko: "휴가를 위한 상세한 여행 일정표를 출력해 두었다." },
+    { en: "Feel free to change the itinerary if you get tired.", ko: "피곤하면 여행 일정표는 언제든 자유롭게 바꾸세요." }
   ]},
-  ...Array.from({ length: 95 }, (_, i) => {
-    const idx = i + 6;
-    return {
-      id: `t0${idx < 100 ? '0' + idx : idx}`,
-      word: `airport security term #${idx}`,
-      ipa: `/ˈɛərˌpɔːt sɪˈkjʊrəti/`,
-      meaning: `공항 절차 및 여행 필수 표현 #${idx}`,
-      category: 'travel_airport',
-      categoryLabel: '여행/공항',
-      tags: ['#공항수속', '#해외여행'],
-      examples: [
-        { en: `Please remove all electronics from your bag at security checkpoint ${idx}.`, ko: `보안 검색대 ${idx}번 구역에서 가방 속 전자기기를 모두 꺼내 주세요.` },
-        { en: "Connecting flights require going through security screening again.", ko: "환승 항공편은 보안 검색을 다시 거쳐야 합니다." },
-        { en: "Always arrive at the airport at least three hours before international flights.", ko: "국제선 항공편의 경우 항상 최소 3시간 전에 공항에 도착하세요." }
-      ]
-    };
-  }),
 
   // --- DAILY CONVERSATION (일상대화) ---
-  { id: 'd001', word: 'hit the spot', ipa: '/hɪt ðə spɑːt/', meaning: '(음식 등이) 아주 만족스럽다', category: 'daily', categoryLabel: '일상대화', tags: ['#만족', '#감탄'], examples: [
-    { en: "That iced coffee really hit the spot on a hot afternoon.", ko: "더운 오후에 저 아이스 커피가 정말 딱 좋았어." },
-    { en: "Homemade chicken soup always hits the spot when sick.", ko: "아플 때는 집에서 끓인 닭죽이 최고로 만족스럽다." },
-    { en: "This sweet dessert definitely hit the spot after dinner.", ko: "이 달콤한 디저트가 저녁 식사 후 완벽한 만족을 주었다." }
+  { id: 'd001', word: 'appointment', ipa: '/əˈpɔɪntmənt/', meaning: '(만남의) 약속, 예약', category: 'daily', categoryLabel: '일상대화', tags: ['#약속', '#일정'], examples: [
+    { en: "I have a dentist appointment tomorrow afternoon.", ko: "내일 오후에 치과 예약이 잡혀 있습니다." },
+    { en: "Make sure to cancel the appointment ahead of time.", ko: "약속은 사전에 미리 취소해 주시기 바랍니다." }
   ]},
-  { id: 'd002', word: 'call it a day', ipa: '/kɔːl ɪt ə deɪ/', meaning: '하루 일을 마치다, 끝내다', category: 'daily', categoryLabel: '일상대화', tags: ['#마무리', '#퇴근'], examples: [
-    { en: "We've accomplished a lot today, let's call it a day.", ko: "오늘 많은 걸 해냈으니 이만 마무리합시다." },
-    { en: "I'm exhausted, I think I'll call it a day early.", ko: "녹초가 되었으니 오늘은 일찍 일과를 끝내야겠다." },
-    { en: "They decided to call it a day and go home.", ko: "그들은 작업을 그만두고 집에 가기로 결정했다." }
+  { id: 'd002', word: 'convenient', ipa: '/kənˈviːniənt/', meaning: '편리한', category: 'daily', categoryLabel: '일상대화', tags: ['#편리', '#생활'], examples: [
+    { en: "Public transportation here is very clean and convenient.", ko: "여기는 대중교통이 매우 깨끗하고 편리하다." },
+    { en: "Let me know what time is convenient for you.", ko:언제 시간이 편하신지 알려주세요." }
   ]},
-  { id: 'd003', word: 'under the weather', ipa: '/ˈʌndər ðə ˈweðər/', meaning: '몸이 좀 안 좋다, 컨디션이 별로다', category: 'daily', categoryLabel: '일상대화', tags: ['#건강', '#컨디션'], examples: [
-    { en: "Sarah is feeling a little under the weather, so she stayed home.", ko: "사라는 컨디션이 좀 안 좋아서 집에 머물렀다." },
-    { en: "If you feel under the weather, get plenty of rest.", ko: "몸이 찌뿌둥하고 안 좋다면 푹 쉬도록 해라." },
-    { en: "He looked a bit under the weather during the meeting.", ko: "그는 회의 내내 컨디션이 안 좋아 보였다." }
+  { id: 'd003', word: 'frequent', ipa: '/ˈfriːkwənt/', meaning: '자주 일어나는, 빈번한', category: 'daily', categoryLabel: '일상대화', tags: ['#빈도', '#일상'], examples: [
+    { en: "Traffic jams are frequent during rush hours.", ko: "출퇴근 시간대에는 교통 체증이 빈번하게 발생한다." },
+    { en: "He is a frequent visitor to this local library.", ko: "그는 이 동네 도서관에 자주 드나드는 단골이다." }
   ]},
-  { id: 'd004', word: 'out of the blue', ipa: '/aʊt əv ðə bluː/', meaning: '갑자기, 느닷없이', category: 'daily', categoryLabel: '일상대화', tags: ['#갑자기', '#서프라이즈'], examples: [
-    { en: "An old friend contacted me out of the blue yesterday.", ko: "어제 옛 친구로부터 난데없이 연락이 왔다." },
-    { en: "The rain started pouring down completely out of the blue.", ko: "느닷없이 비가 억수같이 쏟아지기 시작했다." },
-    { en: "He brought up the strange topic out of the blue.", ko: "그는 뜬금없이 그 이상한 주제를 꺼내 들었다." }
+  { id: 'd004', word: 'patient', ipa: '/ˈpeɪʃnt/', meaning: '참을성 있는, 환자', category: 'daily', categoryLabel: '일상대화', tags: ['#성격', '#인내'], examples: [
+    { en: "Please be patient while we process your request.", ko: "요청 사항을 처리하는 동안 조금만 참아주세요." },
+    { en: "Teaching young children requires a lot of patience.", ko: "어린아이들을 가르치는 것은 많은 인내심을 요구한다." }
   ]},
-  { id: 'd005', word: 'catch up', ipa: '/kætʃ ʌp/', meaning: '밀린 이야기를 나누다, 근황을 묻다', category: 'daily', categoryLabel: '일상대화', tags: ['#근황', '#수다'], examples: [
-    { en: "It was wonderful to sit down and catch up with you.", ko: "자리에 앉아 그간의 이야기를 나눌 수 있어서 정말 멋졌어." },
-    { en: "We have so much to talk about and catch up on.", ko: "우리 얘기하고 근황을 나눌 내용이 산더미처럼 많다." },
-    { en: "Let's grab lunch sometime next week to catch up.", ko: "다음 주쯤 점심이나 먹으면서 회포를 풀자." }
+  { id: 'd005', word: 'schedule', ipa: '/ˈskedʒuːl/', meaning: '일정, 스케줄', category: 'daily', categoryLabel: '일상대화', tags: ['#일정', '#계획'], examples: [
+    { en: "My schedule is completely packed for this week.", ko: "이번 주는 제 스케줄이 완전히 꽉 차 있습니다." },
+    { en: "We need to check our schedules before fixing a date.", ko: "날짜를 확정하기 전에 서로 일정을 확인해 봐야 한다." }
   ]},
-  ...Array.from({ length: 95 }, (_, i) => {
-    const idx = i + 6;
-    return {
-      id: `d0${idx < 100 ? '0' + idx : idx}`,
-      word: `daily conversation expression #${idx}`,
-      ipa: `/ˈdeɪli ɪkˈsprɛʃən/`,
-      meaning: `일상 소통 및 대화 스킬 #${idx}`,
-      category: 'daily',
-      categoryLabel: '일상대화',
-      tags: ['#일상회화', '#생활표현'],
-      examples: [
-        { en: `Effective listening makes conversation partners feel truly valued in dialogue ${idx}.`, ko: `적극적인 경청은 대화 상대방이 진정으로 존중받는다고 느끼게 해 준다.` },
-        { en: "Sharing small daily stories deepens friendship over time.", ko: "소소한 일상 이야기를 나누는 것이 시간이 지날수록 우정을 깊게 만들어 준다." },
-        { en: "Maintaining a positive attitude brightens everyone's day.", ko: "긍정적인 태도를 유지하는 것이 주변 사람들의 하루를 밝게 만들어 준다." }
-      ]
-    };
-  }),
 
   // --- SHOPPING (쇼핑/택시) ---
-  { id: 's001', word: 'on sale', ipa: '/ɑːn seɪl/', meaning: '할인 판매 중인', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#할인', '#쇼핑'], examples: [
-    { en: "Are these running shoes currently on sale?", ko: "이 러닝화는 지금 할인 판매 중인가요?" },
-    { en: "I managed to buy the jacket on sale for half price.", ko: "그 재킷을 반값 할인할 때 건질 수 있었다." },
-    { en: "Most winter items are going on sale this week.", ko: "이번 주에 대부분의 겨울 상품들이 할인에 들어간다." }
+  { id: 's001', word: 'bargain', ipa: '/ˈbɑːrɡən/', meaning: '흥정하다, 값싸게 산 물건', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#흥정', '#할인'], examples: [
+    { en: "You can bargain for lower prices at the open market.", ko: "재래시장에 가면 더 낮은 가격으로 흥정할 수 있다." },
+    { en: "This winter coat was an absolute bargain.", ko: "이 겨울 코트는 정말 헐값에 건진 대단한 물건이었다." }
   ]},
-  { id: 's002', word: 'out of stock', ipa: '/aʊt əv stɑːk/', meaning: '품절된', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#재고', '#품절'], examples: [
-    { en: "Unfortunately, that color is completely out of stock.", ko: "안타깝게도 해당 색상은 완전히 품절되었습니다." },
-    { en: "They checked the inventory, but it was out of stock.", ko: "재고를 확인해 보았으나 품절 상태였다." },
-    { en: "Leave your email to get notified when it's back in stock.", ko: "재고가 들어올 때 알림을 받도록 이메일을 남겨주세요." }
+  { id: 's002', word: 'discount', ipa: '/ˈdɪskaʊnt/', meaning: '할인', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#할인', '#가격'], examples: [
+    { en: "Do you offer a student discount for these tickets?", ko: "이 표들에 대해 학생 할인을 제공하나요?" },
+    { en: "Members get an extra 10% discount on all items.", ko: "회원들은 모든 품목에 대해 10% 추가 할인을 받습니다." }
   ]},
-  { id: 's003', word: 'fitting room', ipa: '/ˈfɪtɪŋ ruːm/', meaning: '탈의실, 피팅룸', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#옷가게', '#입어보기'], examples: [
-    { en: "Can I try these two shirts in the fitting room?", ko: "이 셔츠 두 장을 탈의실에서 입어봐도 될까요?" },
-    { en: "The fitting room is right around the corner.", ko: "피팅룸은 바로 모퉁이 돌면 있습니다." },
-    { en: "Please wait in line for the next available fitting room.", ko: "비어 있는 다음 탈의실을 위해 줄서서 기다려 주세요." }
+  { id: 's003', word: 'exchange', ipa: '/eksˈtʃeɪndʒ/', meaning: '교환하다, 환전하다', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#교환', '#환전'], examples: [
+    { en: "Can I exchange this shirt for a larger size?", ko: "이 셔츠를 더 큰 사이즈로 교환할 수 있나요?" },
+    { en: "Where is the best place to exchange currency?", ko: "환전하기 가장 좋은 장소가 어디인가요?" }
   ]},
-  { id: 's004', word: 'keep the change', ipa: '/kiːp ðə tʃeɪndʒ/', meaning: '잔돈은 가지세요', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#택시', '#잔돈'], examples: [
-    { en: "Here is $15, keep the change for your kind service.", ko: "여기 15달러요, 친절한 서비스에 대한 잔돈은 가지세요." },
-    { en: "The taxi driver thanked me when I told him to keep the change.", ko: "잔돈을 가지라고 말했을 때 택시 기사님이 고마워하셨다." },
-    { en: "Tipping customs often involve telling them to keep the change.", ko: "팁 문화에서는 흔히 잔돈을 가지라고 말하곤 한다." }
+  { id: 's004', word: 'refund', ipa: '/ˈriːfʌnd/', meaning: '환불, 환불하다', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#환불', '#반품'], examples: [
+    { en: "I would like to request a full refund for this defective product.", ko: "이 불량 제품에 대해 전액 환불을 요청하고 싶습니다." },
+    { en: "Refunds are only available within 14 days of purchase.", ko: "환불은 구매일로부터 14일 이내에만 가능합니다." }
   ]},
-  { id: 's005', word: 'rip-off', ipa: '/ˈrɪp ɑːf/', meaning: '바가지 요금, 터무니없이 비싼 것', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#가격', '#바가지'], examples: [
-    { en: "Charging twenty dollars for a simple snack is a rip-off.", ko: "간식 하나에 20달러를 청구하는 건 완전 바가지다." },
-    { en: "Don't buy souvenirs near the main tourist spot, it's a rip-off.", ko: "주요 관광지 근처에서 기념품 사지 마라, 엄청 비싸다." },
-    { en: "He complained that the entrance fee was a total rip-off.", ko: "그는 입장료가 완전히 바가지라고 불평했다." }
+  { id: 's005', word: 'warranty', ipa: '/ˈwɔːrənti/', meaning: '품질 보증서, 보증', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#보증', '#AS'], examples: [
+    { en: "This laptop comes with a two-year manufacturer warranty.", ko: "이 노트북은 2년 제조사 품질 보증이 제공됩니다." },
+    { en: "Accidental damage is not covered under the standard warranty.", ko: "과실로 인한 파손은 기본 보증 범위에 포함되지 않습니다." }
   ]},
-  ...Array.from({ length: 95 }, (_, i) => {
-    const idx = i + 6;
-    return {
-      id: `s0${idx < 100 ? '0' + idx : idx}`,
-      word: `retail shopping term #${idx}`,
-      ipa: `/ˈriːteɪl ˈʃɑːpɪŋ/`,
-      meaning: `상점 이용 및 결제 표현 #${idx}`,
-      category: 'shopping',
-      categoryLabel: '쇼핑/택시',
-      tags: ['#쇼핑결제', '#택시이용'],
-      examples: [
-        { en: `Can I ask for tax refund assistance at customer service desk ${idx}?`, ko: `${idx}번 고객 서비스 데스크에서 택스 리펀드(세금 환급) 도움을 받을 수 있나요?` },
-        { en: "Comparing prices online helps you find the best shopping deals.", ko: "온라인으로 가격을 비교하는 것이 가장 좋은 쇼핑 혜택을 찾는 데 도움을 준다." },
-        { en: "Always check the return policy before purchasing expensive electronics.", ko: "고가의 전자기기를 구매하기 전에 환불 규정을 반드시 확인하세요." }
-      ]
-    };
-  }),
 
   // --- BUSINESS & WORKPLACE (비즈니스) ---
-  { id: 'b001', word: 'touch base', ipa: '/tʌtʃ beɪs/', meaning: '간단히 연락하다, 조율하다', category: 'business', categoryLabel: '비즈니스', tags: ['#연락', '#업무조율'], examples: [
-    { en: "Let's touch base tomorrow morning before the client arrives.", ko: "고객이 도착하기 내일 아침에 간단히 의견을 맞추자." },
-    { en: "I wanted to touch base regarding the latest contract update.", ko: "최신 계약서 업데이트 건과 관련해 확인차 연락드렸습니다." },
-    { en: "We need to touch base with the engineering department.", ko: "엔지니어링 부서와 빠르게 업무 조율을 거쳐야 합니다." }
+  { id: 'b001', word: 'colleague', ipa: '/ˈkɑːliːɡ/', meaning: '동료', category: 'business', categoryLabel: '비즈니스', tags: ['#동료', '#직장'], examples: [
+    { en: "I went out for lunch with my colleagues from work.", ko: "나는 직장 동료들과 함께 점심을 먹으러 나갔다." },
+    { en: "She is a trusted colleague and a great team player.", ko: "그녀는 신뢰할 수 있는 동료이자 훌륭한 팀플레이어이다." }
   ]},
-  { id: 'b002', word: 'on the same page', ipa: '/ɑːn ðə seɪm peɪdʒ/', meaning: '의견이 일치하는, 뜻을 같이하는', category: 'business', categoryLabel: '비즈니스', tags: ['#협업', '#동의'], examples: [
-    { en: "I want to ensure our entire team is on the same page.", ko: "우리 팀원 모두가 동일한 이해와 방향성을 공유하고 있는지 확인하고 싶다." },
-    { en: "Once we are on the same page, we can start execution.", ko: "모두 뜻이 일치하게 되면 곧바로 실행에 착수할 수 있다." },
-    { en: "Regular briefings keep everyone on the same page.", ko: "정기 브리핑은 모든 사람이 같은 상황을 인지하도록 유지해 준다." }
+  { id: 'b002', word: 'negotiation', ipa: '/nɪˌɡoʊʃiˈeɪʃn/', meaning: '협상, 절충', category: 'business', categoryLabel: '비즈니스', tags: ['#협상', '#계약'], examples: [
+    { en: "The contract negotiation took over three hours.", ko: "계약 협상이 3시간 넘게 소요되었다." },
+    { en: "Good communication skills are essential in business negotiations.", ko: "비즈니스 협상에서는 원활한 소통 능력이 필수적이다." }
   ]},
-  { id: 'b003', word: 'meet the deadline', ipa: '/miːt ðə ˈdedlaɪn/', meaning: '마감 기한을 맞추다', category: 'business', categoryLabel: '비즈니스', tags: ['#마감', '#일정'], examples: [
-    { en: "Our team worked tirelessly to meet the strict deadline.", ko: "우리 팀은 엄격한 마감 기한을 맞추기 위해 지치지 않고 일했다." },
-    { en: "Do you think we can meet the deadline by this Friday?", ko: "이번 주 금요일까지 마감 시한을 맞출 수 있을 것 같나요?" },
-    { en: "Meeting the deadline successfully boosted our team's morale.", ko: "마감 시한을 성공적으로 맞춘 것이 팀 사기를 북돋았다." }
+  { id: 'b003', word: 'presentation', ipa: '/ˌpriːznˈteɪʃn/', meaning: '발표, 프레젠테이션', category: 'business', categoryLabel: '비즈니스', tags: ['#발표', '#보고'], examples: [
+    { en: "He prepared a brilliant slide deck for his presentation.", ko: "그는 발표를 위해 훌륭한 슬라이드 자료를 준비했다." },
+    { en: "We have a team presentation scheduled for Friday morning.", ko: "금요일 아침에 팀 발표 일정이 잡혀 있습니다." }
   ]},
-  { id: 'b004', word: 'think outside the box', ipa: '/θɪŋk ˌaʊtˈsaɪd ðə bɑːks/', meaning: '창의적으로 생각하다, 틀을 깨다', category: 'business', categoryLabel: '비즈니스', tags: ['#창의성', '#기획'], examples: [
-    { en: "We need to think outside the box to attract younger customers.", ko: "젊은 고객층을 사로잡으려면 기존의 틀을 깨는 참신한 생각이 필요하다." },
-    { en: "Her unique ability to think outside the box inspired us all.", ko: "고정관념을 깨는 그녀의 독창적인 역량이 우리 모두에게 영감을 주었다." },
-    { en: "Innovation comes from people who can think outside the box.", ko: "혁신은 틀에 박히지 않은 사고를 하는 사람들로부터 탄생한다." }
+  { id: 'b004', word: 'productivity', ipa: '/ˌproʊdʌkˈtɪvəti/', meaning: '생산성', category: 'business', categoryLabel: '비즈니스', tags: ['#생산성', '#업무효율'], examples: [
+    { en: "Taking short breaks can significantly boost daily productivity.", ko: "잠깐의 휴식은 일일 업무 생산성을 크게 높여줄 수 있다." },
+    { en: "The company aims to improve overall work productivity.", ko: "회사는 전반적인 업무 생산성 향상을 목표로 하고 있다." }
   ]},
-  { id: 'b005', word: 'follow up', ipa: '/ˈfɑːloʊ ʌp/', meaning: '후속 조치를 하다, 후속 연락을 취하다', category: 'business', categoryLabel: '비즈니스', tags: ['#후속조치', '#이메일'], examples: [
-    { en: "I am writing to follow up on our previous conversation.", ko: "지난번 나눈 대화 내용에 대한 후속 확인차 메일을 드립니다." },
-    { en: "Please follow up with the supplier regarding the shipment.", ko: "화물 선적 건과 관련해 공급업체에 후속 진행 상황을 확인해 주세요." },
-    { en: "A prompt follow-up is essential for closing deals.", ko: "신속한 후속 조치는 계약 체결에 필수적이다." }
-  ]},
-  ...Array.from({ length: 95 }, (_, i) => {
-    const idx = i + 6;
-    return {
-      id: `b0${idx < 100 ? '0' + idx : idx}`,
-      word: `corporate business term #${idx}`,
-      ipa: `/ˈkɔːrpərət ˈbɪznəs/`,
-      meaning: `사무실 실무 및 오피스 비즈니스 표현 #${idx}`,
-      category: 'business',
-      categoryLabel: '비즈니스',
-      tags: ['#직장업무', '#오피스실무'],
-      examples: [
-        { en: `Quarterly performance evaluation for team division ${idx} begins next Monday.`, ko: `팀 부서 ${idx}의 분기별 성과 평가는 다음 주 월요일에 시작됩니다.` },
-        { en: "Clear project milestones ensure smooth collaboration among departments.", ko: "명확한 프로젝트 마일스톤은 부서 간 원활한 협업을 보장한다." },
-        { en: "Effective risk management protects corporate assets in volatile markets.", ko: "효과적인 리스크 관리는 변동성이 큰 시장에서 기업 자산을 보호한다." }
-      ]
-    };
-  })
+  { id: 'b005', word: 'quarterly', ipa: '/ˈkwɔːrtərli/', meaning: '분기별의, 분기마다', category: 'business', categoryLabel: '비즈니스', tags: ['#분기', '#실적'], examples: [
+    { en: "The management team reviews financial performance on a quarterly basis.", ko: "경영진은 분기별로 재무 실적을 검토한다." },
+    { en: "We achieved our quarterly sales targets successfully.", ko: "우리는 분기별 매출 목표를 성공적으로 달성했다." }
+  ]}
 ];
 
 const ITEMS_PER_PAGE = 12;
@@ -471,12 +348,12 @@ export default function App() {
   }, [filteredWords, shuffleCards]);
 
   const categories = [
-    { id: 'all', label: '전체 (500)', icon: Grid },
-    { id: 'cafe_dining', label: '카페/식당 (100)', icon: Coffee },
-    { id: 'travel_airport', label: '여행/공항 (100)', icon: Plane },
-    { id: 'daily', label: '일상대화 (100)', icon: MessageCircle },
-    { id: 'shopping', label: '쇼핑/택시 (100)', icon: ShoppingBag },
-    { id: 'business', label: '비즈니스 (100)', icon: Briefcase },
+    { id: 'all', label: `전체 (${words.length})`, icon: Grid },
+    { id: 'cafe_dining', label: '카페/식당', icon: Coffee },
+    { id: 'travel_airport', label: '여행/공항', icon: Plane },
+    { id: 'daily', label: '일상대화', icon: MessageCircle },
+    { id: 'shopping', label: '쇼핑/택시', icon: ShoppingBag },
+    { id: 'business', label: '비즈니스', icon: Briefcase },
   ];
 
   return (
@@ -491,10 +368,10 @@ export default function App() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-lg font-extrabold tracking-tight">상황별 회화 500 영한사전</h1>
+                <h1 className="text-lg font-extrabold tracking-tight">상황별 영한사전</h1>
                 <span className="text-[10px] font-extrabold bg-indigo-600 text-white px-2 py-0.5 rounded-full">PRO</span>
               </div>
-              <p className={`text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>일상회화 마스터를 위한 500개 핵심 단어/숙어 & 예문</p>
+              <p className={`text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>핵심 영단어 & 실생활 예문 사전</p>
             </div>
           </div>
 
@@ -545,7 +422,7 @@ export default function App() {
             }`}
           >
             <BookOpen className="w-4 h-4" />
-            단어/숙어 사전 (500)
+            단어 사전 ({words.length})
           </button>
           <button
             onClick={() => setActiveTab('bookmarks')}
@@ -581,7 +458,7 @@ export default function App() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
               <input
                 type="text"
-                placeholder="영단어/숙어, 한국어 뜻, 예문, 태그(#식사) 검색..."
+                placeholder="영단어, 뜻, 예문, 태그(#식사) 검색..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className={`w-full pl-12 pr-10 py-3.5 rounded-2xl border text-sm transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30 ${
@@ -603,7 +480,7 @@ export default function App() {
             {/* Category Pills */}
             <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
               <span className="text-xs font-semibold text-slate-400 flex items-center gap-1 shrink-0 mr-1">
-                <Filter className="w-3.5 h-3.5" /> 상황:
+                <Filter className="w-3.5 h-3.5" /> 분류:
               </span>
               {categories.map((cat) => {
                 const IconComponent = cat.icon;
@@ -644,7 +521,7 @@ export default function App() {
                   <>❚❚ 운전 모드 연속 재생 정지중</>
                 ) : (
                   <>
-                    ▶ 현재 목록 이어서 연속 듣기 (운전 모드)
+                    ▶ 단어 & 뜻 연속 듣기 (운전 모드)
                     <span className="text-xs bg-emerald-800 px-2 py-0.5 rounded-full ml-1 font-mono">
                       {filteredWords.length > 0 ? (currentIndex % filteredWords.length) + 1 : 0} / {filteredWords.length}
                     </span>
@@ -660,10 +537,10 @@ export default function App() {
           <div>
             <div className="flex justify-between items-center mb-4 text-xs font-medium text-slate-500 px-1">
               <span>
-                검색된 표현: <strong className="text-indigo-600 font-bold">{filteredWords.length}개</strong> (페이지 {currentPage} / {totalPages})
+                검색된 단어: <strong className="text-indigo-600 font-bold">{filteredWords.length}개</strong> (페이지 {currentPage} / {totalPages})
               </span>
               {activeTab === 'bookmarks' && bookmarks.length === 0 && (
-                <span className="text-rose-500 font-semibold">저장된 북마크 표현이 없습니다.</span>
+                <span className="text-rose-500 font-semibold">저장된 북마크 단어가 없습니다.</span>
               )}
             </div>
 
@@ -725,7 +602,7 @@ export default function App() {
                                   ? 'bg-slate-800 text-slate-300 hover:bg-indigo-600 hover:text-white' 
                                   : 'bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white'
                             }`}
-                            title="단어/숙어 원어민 발음 듣기"
+                            title="영단어 발음 듣기"
                           >
                             <Volume2 className="w-4 h-4" />
                           </button>
@@ -736,7 +613,7 @@ export default function App() {
                         </p>
 
                         <div className="space-y-2 pt-3 border-t border-slate-200/40">
-                          <p className="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase">실생활 응용 예문</p>
+                          <p className="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase">단어 예문</p>
                           {item.examples.map((ex, idx) => {
                             const isExSpeaking = speakingId === `ex-${item.id}-${idx}`;
                             return (
@@ -789,7 +666,7 @@ export default function App() {
               <div className={`rounded-3xl p-12 text-center border ${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
                 <HelpCircle className="w-12 h-12 text-slate-400 mx-auto mb-3" />
                 <h3 className="text-base font-bold">검색 결과가 없습니다</h3>
-                <p className="text-xs text-slate-400 mt-1">검색어를 수정하거나 다른 카테고리를 선택해 보세요.</p>
+                <p className="text-xs text-slate-400 mt-1">검색어를 수정하거나 다른 분류를 선택해 보세요.</p>
               </div>
             )}
 
@@ -894,7 +771,7 @@ export default function App() {
                         </div>
 
                         <div className="space-y-2 pt-3 border-t border-slate-700/30">
-                          <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider text-center">예문 응용</p>
+                          <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider text-center">예문 확인</p>
                           {flashcardQueue[cardIndex].examples.slice(0, 2).map((ex, idx) => (
                             <div key={idx} className={`p-2.5 rounded-xl border text-xs ${darkMode ? 'bg-slate-950/60 border-slate-800' : 'bg-white/80 border-slate-200'}`}>
                               <p className="font-semibold">{ex.en}</p>
@@ -949,7 +826,7 @@ export default function App() {
               </div>
             ) : (
               <div className={`rounded-3xl p-12 text-center border ${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-                <p className="text-sm text-slate-400">학습할 플래시카드 단어가 없습니다.</p>
+                <p className="text-sm text-slate-400">학습할 단어가 없습니다.</p>
               </div>
             )}
           </div>
