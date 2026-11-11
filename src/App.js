@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { 
   Search, 
   Volume2, 
@@ -24,7 +24,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 
-// --- Comprehensive 500 Practical Conversation Words/Phrases Dataset ---
+// --- 500 Practical Conversation Words/Phrases Dataset ---
 const RAW_WORDS = [
   // CATEGORY 1: Cafe & Dining (카페 & 식당)
   { id: 'c001', word: 'grab a bite', ipa: '/ɡræb ə baɪt/', meaning: '간단히 뭐 좀 먹다', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#식사', '#약속'], examples: [
@@ -195,19 +195,18 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [darkMode, setDarkMode] = useState(false);
 
-  // --- 운전 모드 연속 듣기 관련 상태 및 로직 ---
+  // --- 운전 모드 연속 듣기 관련 상태 ---
   const [isPlayingAll, setIsPlayingAll] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(() => {
     const savedIndex = localStorage.getItem('lastListeningIndex');
     return savedIndex ? parseInt(savedIndex, 10) : 0;
   });
 
-  // 카테고리나 검색어가 바뀌면 인덱스 0으로 초기화
   useEffect(() => {
     setCurrentIndex(0);
   }, [selectedCategory, searchQuery]);
 
-  // LocalStorage Persistence for Bookmarks
+  // LocalStorage Bookmarks
   const [bookmarks, setBookmarks] = useState(() => {
     try {
       const saved = localStorage.getItem('talk_dict_500_bookmarks');
@@ -242,8 +241,8 @@ export default function App() {
     );
   };
 
-  // Text-to-Speech Engine
-  const speakText = (text, idKey) => {
+  // Text-to-Speech Engine (useCallback으로 종속성 완벽 처리)
+  const speakText = useCallback((text, idKey, customLang) => {
     return new Promise((resolve) => {
       if (!('speechSynthesis' in window)) {
         resolve();
@@ -253,11 +252,12 @@ export default function App() {
       window.speechSynthesis.cancel(); 
 
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = voiceGender;
+      const targetLang = customLang || voiceGender;
+      utterance.lang = targetLang;
       utterance.rate = 0.9;
 
       const voices = window.speechSynthesis.getVoices();
-      const targetVoice = voices.find(v => v.lang === voiceGender || v.lang.startsWith(voiceGender.split('-')[0]));
+      const targetVoice = voices.find(v => v.lang === targetLang || v.lang.startsWith(targetLang.split('-')[0]));
       if (targetVoice) {
         utterance.voice = targetVoice;
       }
@@ -274,7 +274,7 @@ export default function App() {
 
       window.speechSynthesis.speak(utterance);
     });
-  };
+  }, [voiceGender]);
 
   // Filtered dataset calculation
   const filteredWords = useMemo(() => {
@@ -297,8 +297,7 @@ export default function App() {
     });
   }, [words, selectedCategory, searchQuery, activeTab, bookmarks]);
 
-  // --- 운전 모드 연속 재생 오디오 엔진 (영어 예문 3회 반복 + 한글 번역 포함) ---
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // --- 운전 모드 연속 재생 오디오 엔진 ---
   useEffect(() => {
     let isCancelled = false;
 
@@ -318,7 +317,7 @@ export default function App() {
       await new Promise(r => setTimeout(r, 400));
 
       // ② 한국어 뜻 1회
-      await speakText(currentWord.meaning, null);
+      await speakText(currentWord.meaning, null, 'ko-KR');
       if (isCancelled || !isPlayingAll) return;
       await new Promise(r => setTimeout(r, 500));
 
@@ -337,12 +336,12 @@ export default function App() {
         // ④ 예문 한글 번역 1회
         if (primaryExampleKo) {
           if (isCancelled || !isPlayingAll) return;
-          await speakText(primaryExampleKo, null);
+          await speakText(primaryExampleKo, null, 'ko-KR');
           await new Promise(r => setTimeout(r, 800));
         }
       }
 
-      // ⑤ 다음 단어로 넘어가기 전 휴식 (1.5초)
+      // ⑤ 다음 단어로 넘어가기 전 휴식
       await new Promise(r => setTimeout(r, 1500));
 
       if (isPlayingAll && !isCancelled) {
@@ -356,7 +355,7 @@ export default function App() {
       isCancelled = true;
       window.speechSynthesis.cancel();
     };
-  }, [isPlayingAll, currentIndex, filteredWords, voiceGender]);
+  }, [isPlayingAll, currentIndex, filteredWords, speakText]);
 
   // Pagination bounds
   const totalPages = Math.ceil(filteredWords.length / ITEMS_PER_PAGE) || 1;
@@ -386,7 +385,7 @@ export default function App() {
   return (
     <div className={`min-h-screen font-sans transition-colors duration-200 flex flex-col ${darkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-800'}`}>
       
-      {/* --- Top Navigation Header --- */}
+      {/* Top Navigation Header */}
       <header className={`sticky top-0 z-40 border-b backdrop-blur-md transition-colors ${darkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white/90 border-slate-200'}`}>
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -403,7 +402,6 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Voice Accent Switcher */}
             <div className={`flex items-center p-1 rounded-lg border text-xs font-medium ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-100 border-slate-200'}`}>
               <button
                 onClick={() => setVoiceGender('en-US')}
@@ -427,7 +425,6 @@ export default function App() {
               </button>
             </div>
 
-            {/* Dark Mode Toggle Button */}
             <button
               onClick={() => setDarkMode(!darkMode)}
               className={`p-2 rounded-xl border transition-all ${darkMode ? 'bg-slate-800 border-slate-700 text-amber-400' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-100'}`}
@@ -439,7 +436,7 @@ export default function App() {
         </div>
       </header>
 
-      {/* --- Mode Navigation Tabs --- */}
+      {/* Mode Navigation Tabs */}
       <div className={`border-b transition-colors ${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
         <div className="max-w-6xl mx-auto px-4 flex gap-6">
           <button
@@ -478,9 +475,8 @@ export default function App() {
         </div>
       </div>
 
-      {/* --- Main Content Body --- */}
+      {/* Main Content Body */}
       <main className="max-w-6xl mx-auto px-4 py-6 flex-grow w-full">
-        {/* --- Controls: Search & Category Filter --- */}
         {activeTab !== 'flashcard' && (
           <div className="space-y-4 mb-6">
             {/* Search Input */}
@@ -534,7 +530,7 @@ export default function App() {
               })}
             </div>
 
-            {/* 운전 모드 연속 듣기 버튼 UI */}
+            {/* 운전 모드 연속 듣기 버튼 */}
             <div>
               <button
                 onClick={() => {
@@ -562,10 +558,9 @@ export default function App() {
           </div>
         )}
 
-        {/* --- VIEW 1 & 2: Dictionary Grid & Bookmarks List --- */}
+        {/* Dictionary Grid List */}
         {activeTab !== 'flashcard' && (
           <div>
-            {/* Status & Results Summary Bar */}
             <div className="flex justify-between items-center mb-4 text-xs font-medium text-slate-500 px-1">
               <span>
                 검색된 표현: <strong className="text-indigo-600 font-bold">{filteredWords.length}개</strong> (페이지 {currentPage} / {totalPages})
@@ -575,7 +570,6 @@ export default function App() {
               )}
             </div>
 
-            {/* Grid List */}
             {paginatedWords.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {paginatedWords.map((item, index) => {
@@ -595,7 +589,6 @@ export default function App() {
                       }`}
                     >
                       <div>
-                        {/* Top Category Badge & Bookmark */}
                         <div className="flex items-center justify-between mb-3">
                           <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-md ${
                             darkMode ? 'bg-indigo-950 text-indigo-300 border border-indigo-900' : 'bg-indigo-50 text-indigo-600 border border-indigo-100'
@@ -616,7 +609,6 @@ export default function App() {
                           </button>
                         </div>
 
-                        {/* Title Word & Audio */}
                         <div className="flex items-baseline justify-between gap-2 mb-1">
                           <div>
                             <h2 className="text-xl font-extrabold tracking-tight group-hover:text-indigo-600 transition-colors">
@@ -642,12 +634,10 @@ export default function App() {
                           </button>
                         </div>
 
-                        {/* Korean Meaning */}
                         <p className={`text-base font-bold mb-4 ${darkMode ? 'text-indigo-300' : 'text-indigo-950'}`}>
                           {item.meaning}
                         </p>
 
-                        {/* Example Sentences */}
                         <div className="space-y-2 pt-3 border-t border-slate-200/40">
                           <p className="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase">실생활 응용 예문</p>
                           {item.examples.map((ex, idx) => {
@@ -682,7 +672,6 @@ export default function App() {
                         </div>
                       </div>
 
-                      {/* Tags */}
                       <div className="flex flex-wrap gap-1.5 mt-4 pt-2">
                         {item.tags.map((tag, tIdx) => (
                           <span 
@@ -707,7 +696,6 @@ export default function App() {
               </div>
             )}
 
-            {/* Pagination Controls */}
             {totalPages > 1 && (
               <div className="flex items-center justify-center gap-2 mt-8">
                 <button
@@ -738,12 +726,11 @@ export default function App() {
           </div>
         )}
 
-        {/* --- VIEW 3: Flashcard Quiz Mode --- */}
+        {/* Flashcard Quiz Mode */}
         {activeTab === 'flashcard' && (
           <div className="max-w-xl mx-auto py-4">
             {flashcardQueue.length > 0 ? (
               <div>
-                {/* Flashcard Top Bar */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="text-xs font-extrabold text-slate-400">
                     카드 <span className="text-indigo-600">{cardIndex + 1}</span> / {flashcardQueue.length}
@@ -762,7 +749,6 @@ export default function App() {
                   </button>
                 </div>
 
-                {/* Flip Card Interactive Container */}
                 <div 
                   onClick={() => setIsFlipped(!isFlipped)}
                   className="cursor-pointer min-h-[380px] relative"
@@ -773,7 +759,6 @@ export default function App() {
                       : darkMode ? 'bg-slate-900 border-slate-800 hover:border-slate-700' : 'bg-white border-slate-200 hover:border-indigo-300'
                   }`}>
                     
-                    {/* Card Header */}
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-extrabold text-indigo-500 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">
                         {flashcardQueue[cardIndex].categoryLabel}
@@ -783,7 +768,6 @@ export default function App() {
                       </span>
                     </div>
 
-                    {/* Front Display */}
                     {!isFlipped ? (
                       <div className="my-auto text-center py-6">
                         <h2 className="text-3xl md:text-4xl font-black mb-2 tracking-tight">
@@ -804,7 +788,6 @@ export default function App() {
                         </button>
                       </div>
                     ) : (
-                      /* Back Display */
                       <div className="my-auto py-2 space-y-4">
                         <div className="text-center">
                           <h3 className="text-2xl font-black text-indigo-500 mb-1">
@@ -813,7 +796,6 @@ export default function App() {
                           <p className="text-xs text-slate-400 font-semibold">{flashcardQueue[cardIndex].word}</p>
                         </div>
 
-                        {/* Card Back Examples */}
                         <div className="space-y-2 pt-3 border-t border-slate-700/30">
                           <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider text-center">예문 응용</p>
                           {flashcardQueue[cardIndex].examples.slice(0, 2).map((ex, idx) => (
@@ -826,7 +808,6 @@ export default function App() {
                       </div>
                     )}
 
-                    {/* Footer Hint */}
                     <div className="text-center text-xs text-slate-400 pt-2 border-t border-slate-800/40 flex items-center justify-center gap-1">
                       <span>터치하여 앞/뒤면 전환</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -834,7 +815,6 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Bottom Navigation Buttons */}
                 <div className="flex items-center justify-between gap-3 mt-6">
                   <button
                     onClick={() => {
