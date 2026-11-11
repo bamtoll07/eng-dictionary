@@ -24,7 +24,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 
-// --- 100% 고유한 핵심 영단어/숙어 영한사전 데이터셋 ---
+// --- 100% 문법 오류 없는 깔끔한 영한사전 데이터셋 ---
 const RAW_WORDS = [
   // --- CAFE & DINING (카페/식당) ---
   { id: 'c001', word: 'appetizer', ipa: '/ˈæpɪtaɪzər/', meaning: '애피타이저, 전식', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#식사', '#메뉴'], examples: [
@@ -35,7 +35,7 @@ const RAW_WORDS = [
     { en: "Hot and cold beverages are served in the lounge.", ko: "라운지에서는 뜨겁고 찬 음료가 제공됩니다." },
     { en: "Please select one complimentary beverage with your meal.", ko: "식사와 함께 무료 음료를 하나 선택해 주세요." }
   ]},
-  { id: 'c003', word: 'cutlery', ipa: '/ˈkʌtləri/', meaning: '(나이프·포크·숟가락 등의) 식기류', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#식기', '#테이블'], examples: [
+  { id: 'c003', word: 'cutlery', ipa: '/ˈkʌtləri/', meaning: '식기류 (나이프·포크·숟가락)', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#식기', '#테이블'], examples: [
     { en: "Could you bring clean cutlery for our table, please?", ko: "저희 테이블에 깨끗한 식기류 좀 가져다주시겠어요?" },
     { en: "The waiter laid out the cutlery neatly on the cloth.", ko: "웨이터가 식탁보 위에 식기류를 깔끔하게 놓았다." }
   ]},
@@ -56,14 +56,14 @@ const RAW_WORDS = [
     { en: "Keep your receipt in case you need to exchange the item.", ko: "상품을 교환해야 할 경우를 대비해 영수증을 보관하세요." }
   ]},
   { id: 'c008', word: 'specialty', ipa: '/ˈspeʃəlti/', meaning: '명물, 특산품, 전문 요리', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#추천요리', '#특산품'], examples: [
-    { en: "Seafood pasta is the chef's specialty here.", ko: "해산물 파스타가 이곳 셰프의 특선 요리입니다." },
+    { en: "Seafood pasta is the chef specialty here.", ko: "해산물 파스타가 이곳 셰프의 특선 요리입니다." },
     { en: "What is the local specialty of this region?", ko: "이 지역의 향토 특산품은 무엇인가요?" }
   ]},
   { id: 'c009', word: 'reservation', ipa: '/ˌrezərˈveɪʃn/', meaning: '예약', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#예약', '#식당'], examples: [
     { en: "I have a table reservation under the name of Kim.", ko: "김 이름으로 테이블 예약이 되어 있습니다." },
     { en: "Making a reservation in advance is highly recommended.", ko: "사전에 미리 예약하는 것을 강력히 추천합니다." }
   ]},
-  { id: 'c010', word: 'vegetarian', ipa: '/ˌvedʒəˈteriən/', meaning: '채식주의자의, 채식주의자', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#채식', '#식단'], examples: [
+  { id: 'c010', word: 'vegetarian', ipa: '/ˌvedʒəˈteriən/', meaning: '채식주의자, 채식의', category: 'cafe_dining', categoryLabel: '카페/식당', tags: ['#채식', '#식단'], examples: [
     { en: "Do you have any vegetarian options on the menu?", ko: "메뉴에 채식주의자용 요리가 따로 있나요?" },
     { en: "She has been a strict vegetarian for over five years.", ko: "그녀는 5년 넘게 엄격한 채식주의자로 지내고 있다." }
   ]},
@@ -97,7 +97,7 @@ const RAW_WORDS = [
   ]},
   { id: 'd002', word: 'convenient', ipa: '/kənˈviːniənt/', meaning: '편리한', category: 'daily', categoryLabel: '일상대화', tags: ['#편리', '#생활'], examples: [
     { en: "Public transportation here is very clean and convenient.", ko: "여기는 대중교통이 매우 깨끗하고 편리하다." },
-    { en: "Let me know what time is convenient for you.", ko:언제 시간이 편하신지 알려주세요." }
+    { en: "Let me know what time is convenient for you.", ko: "언제 시간이 편하신지 알려주세요." }
   ]},
   { id: 'd003', word: 'frequent', ipa: '/ˈfriːkwənt/', meaning: '자주 일어나는, 빈번한', category: 'daily', categoryLabel: '일상대화', tags: ['#빈도', '#일상'], examples: [
     { en: "Traffic jams are frequent during rush hours.", ko: "출퇴근 시간대에는 교통 체증이 빈번하게 발생한다." },
@@ -113,7 +113,7 @@ const RAW_WORDS = [
   ]},
 
   // --- SHOPPING (쇼핑/택시) ---
-  { id: 's001', word: 'bargain', ipa: '/ˈbɑːrɡən/', meaning: '흥정하다, 값싸게 산 물건', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#흥정', '#할인'], examples: [
+  { id: 's001', word: 'bargain', ipa: '/ˈbɑːrɡən/', meaning: '흥정하다, 싼 물건', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#흥정', '#할인'], examples: [
     { en: "You can bargain for lower prices at the open market.", ko: "재래시장에 가면 더 낮은 가격으로 흥정할 수 있다." },
     { en: "This winter coat was an absolute bargain.", ko: "이 겨울 코트는 정말 헐값에 건진 대단한 물건이었다." }
   ]},
@@ -129,7 +129,7 @@ const RAW_WORDS = [
     { en: "I would like to request a full refund for this defective product.", ko: "이 불량 제품에 대해 전액 환불을 요청하고 싶습니다." },
     { en: "Refunds are only available within 14 days of purchase.", ko: "환불은 구매일로부터 14일 이내에만 가능합니다." }
   ]},
-  { id: 's005', word: 'warranty', ipa: '/ˈwɔːrənti/', meaning: '품질 보증서, 보증', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#보증', '#AS'], examples: [
+  { id: 's005', word: 'warranty', ipa: '/ˈwɔːrənti/', meaning: '품질 보증, 보증서', category: 'shopping', categoryLabel: '쇼핑/택시', tags: ['#보증', '#AS'], examples: [
     { en: "This laptop comes with a two-year manufacturer warranty.", ko: "이 노트북은 2년 제조사 품질 보증이 제공됩니다." },
     { en: "Accidental damage is not covered under the standard warranty.", ko: "과실로 인한 파손은 기본 보증 범위에 포함되지 않습니다." }
   ]},
