@@ -554,7 +554,7 @@ const RAW_WORDS = [
     { en: "Keeping clients happy is the top priority for our account managers.", ko: "고객들을 만족시키는 게 우리 계정 관리자들의 최우선 과제다." }
   ]},
   { id: 'b008', word: 'deadline', ipa: '/ˈdedlaɪn/', meaning: '마감 기한', category: 'business', categoryLabel: '비즈니스', tags: ['#마감', '#일정'], examples: [
-    { en: "Can we push back the project deadline by just two days?", ko:구체적인 프로젝트 마감 기한을 딱 이틀만 뒤로 미룰 수 있을까요?" },
+    { en: "Can we push back the project deadline by just two days?", ko: "구체적인 프로젝트 마감 기한을 딱 이틀만 뒤로 미룰 수 있을까요?" },
     { en: "Everyone is rushing to wrap up their tasks before the Friday deadline.", ko: "모두가 금요일 마감 기한 전에 업무 마무리하려고 정신없이 뛰고 있어." }
   ]},
   { id: 'b009', word: 'enterprise', ipa: '/ˈentərpraɪz/', meaning: '기업, 회사', category: 'business', categoryLabel: '비즈니스', tags: ['#기업', '#회사'], examples: [
